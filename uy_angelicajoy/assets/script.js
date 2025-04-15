@@ -1,0 +1,156 @@
+let searchInput = document.getElementById("search-input");
+let searchButton = document.getElementById("search-button");
+let loadingElement = document.getElementById("loading");
+let errorElement = document.getElementById("error");
+let countryDetails = document.getElementById("country-details");
+let regionCountries = document.getElementById("region-countries");
+let initialMessage = document.getElementById("initial-message");
+
+let countryFlag = document.getElementById("country-flag");
+let countryCommonName = document.getElementById("country-common-name");
+let countryOfficialName = document.getElementById("country-official-name");
+let countryCapital = document.getElementById("country-capital");
+let countryRegion = document.getElementById("country-region");
+let countryPopulation = document.getElementById("country-population");
+let countryLanguages = document.getElementById("country-languages");
+let countryCurrencies = document.getElementById("country-currencies");
+let countryArea = document.getElementById("country-area");
+
+let regionTitle = document.getElementById("region-title");
+let countriesGrid = document.getElementById("countries-grid");
+
+function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function formatLanguages(languages) {
+    if (!languages) return "N/A";
+    return Object.values(languages).join(", ");
+}
+
+function formatCurrencies(currencies) {
+    if (!currencies) return "N/A";
+    return Object.values(currencies)
+        .map((currency) => `${currency.name} (${currency.symbol || ""})`)
+        .join(", ");
+}
+
+// Search for a country
+async function searchCountry(countryName) {
+    initialMessage.style.display = "none";
+    loadingElement.style.display = "block";
+    errorElement.style.display = "none";
+    countryDetails.style.display = "none";
+    regionCountries.style.display = "none";
+
+    try {
+        // First API request: Search for the country
+        let countryResponse = await fetch(
+            `https://restcountries.com/v3.1/name/${countryName}`
+        );
+
+        if (!countryResponse.ok) {
+            throw new Error(
+                "Country not found! Please try another search term."
+            );
+        }
+
+        let countryData = await countryResponse.json();
+        let country = countryData[0];
+
+        // Display country details
+        displayCountryDetails(country);
+
+        // Extract region for second API request
+        let region = country.region;
+
+        // Second API request: Get countries from the same region
+        let regionResponse = await fetch(
+            `https://restcountries.com/v3.1/region/${region}`
+        );
+
+        if (!regionResponse.ok) {
+            throw new Error("Could not load region data.");
+        }
+
+        let regionData = await regionResponse.json();
+
+        displayRegionCountries(regionData, country.cca3, region);
+    } catch (error) {
+        errorElement.textContent = error.message;
+        errorElement.style.display = "block";
+        initialMessage.style.display = "block";
+    } finally {
+        loadingElement.style.display = "none";
+    }
+}
+
+// Display country details
+function displayCountryDetails(country) {
+    countryFlag.src = country.flags.svg || country.flags.png;
+    countryFlag.alt = `Flag of ${country.name.common}`;
+
+    countryCommonName.textContent = country.name.common;
+    countryOfficialName.textContent = country.name.official;
+
+    countryCapital.textContent = country.capital ? country.capital[0] : "N/A";
+    countryRegion.textContent = country.subregion
+        ? `${country.region} (${country.subregion})`
+        : country.region;
+    countryPopulation.textContent = formatNumber(country.population);
+    countryLanguages.textContent = formatLanguages(country.languages);
+    countryCurrencies.textContent = formatCurrencies(country.currencies);
+    countryArea.textContent = country.area
+        ? `${formatNumber(country.area)} km²`
+        : "N/A";
+
+    countryDetails.style.display = "block";
+}
+
+// Display countries from the same region
+function displayRegionCountries(regionData, currentCountryCode, regionName) {
+    countriesGrid.innerHTML = "";
+
+    regionTitle.textContent = `Other Countries in ${regionName}`;
+
+    // Filter out current country and limit to 5 countries
+    let otherCountries = regionData
+        .filter((country) => country.cca3 !== currentCountryCode)
+        .slice(0, 5);
+
+    otherCountries.forEach((country) => {
+        let countryCard = document.createElement("div");
+        countryCard.className = "country-card";
+        countryCard.innerHTML = `
+                    <img src="${
+                        country.flags.svg || country.flags.png
+                    }" alt="Flag of ${country.name.common}">
+                    <h3>${country.name.common}</h3>
+                `;
+
+        countryCard.addEventListener("click", () => {
+            searchInput.value = country.name.common;
+            searchCountry(country.name.common);
+        });
+
+        countriesGrid.appendChild(countryCard);
+    });
+
+    regionCountries.style.display = "block";
+}
+
+searchButton.addEventListener("click", () => {
+    let query = searchInput.value.trim();
+    if (query) {
+        searchCountry(query);
+    }
+});
+
+searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        let query = searchInput.value.trim();
+        if (query) {
+            searchCountry(query);
+        }
+    }
+});
