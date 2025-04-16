@@ -35,56 +35,6 @@ function formatCurrencies(currencies) {
         .join(", ");
 }
 
-// Search for a country
-async function searchCountry(countryName) {
-    initialMessage.style.display = "none";
-    loadingElement.style.display = "block";
-    errorElement.style.display = "none";
-    countryDetails.style.display = "none";
-    regionCountries.style.display = "none";
-
-    try {
-        // First API request: Search for the country
-        let countryResponse = await fetch(
-            `https://restcountries.com/v3.1/name/${countryName}`
-        );
-
-        if (!countryResponse.ok) {
-            throw new Error(
-                "Country not found! Please try another search term."
-            );
-        }
-
-        let countryData = await countryResponse.json();
-        let country = countryData[0];
-
-        // Display country details
-        displayCountryDetails(country);
-
-        // Extract region for second API request
-        let region = country.region;
-
-        // Second API request: Get countries from the same region
-        let regionResponse = await fetch(
-            `https://restcountries.com/v3.1/region/${region}`
-        );
-
-        if (!regionResponse.ok) {
-            throw new Error("Could not load region data.");
-        }
-
-        let regionData = await regionResponse.json();
-
-        displayRegionCountries(regionData, country.cca3, region);
-    } catch (error) {
-        errorElement.textContent = error.message;
-        errorElement.style.display = "block";
-        initialMessage.style.display = "block";
-    } finally {
-        loadingElement.style.display = "none";
-    }
-}
-
 // Display country details
 function displayCountryDetails(country) {
     countryFlag.src = country.flags.svg || country.flags.png;
@@ -137,6 +87,55 @@ function displayRegionCountries(regionData, currentCountryCode, regionName) {
     });
 
     regionCountries.style.display = "block";
+}
+
+// Search for a country
+function searchCountry(countryName) {
+    initialMessage.style.display = "none";
+    loadingElement.style.display = "block";
+    errorElement.style.display = "none";
+    countryDetails.style.display = "none";
+    regionCountries.style.display = "none";
+
+    // First API request: Search for the country
+    fetch(`https://restcountries.com/v3.1/name/${countryName}`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(
+                    "Country not found! Please try another search term."
+                );
+            }
+            return response.json();
+        })
+        .then((countryData) => {
+            let country = countryData[0];
+
+            // Display country details
+            displayCountryDetails(country);
+
+            // Extract region for second API request
+            let region = country.region;
+
+            // Second API request: Get countries from the same region
+            return fetch(`https://restcountries.com/v3.1/region/${region}`)
+                .then((regionResponse) => {
+                    if (!regionResponse.ok) {
+                        throw new Error("Could not load region data.");
+                    }
+                    return regionResponse.json();
+                })
+                .then((regionData) => {
+                    displayRegionCountries(regionData, country.cca3, region);
+                });
+        })
+        .catch((error) => {
+            errorElement.textContent = error.message;
+            errorElement.style.display = "block";
+            initialMessage.style.display = "block";
+        })
+        .finally(() => {
+            loadingElement.style.display = "none";
+        });
 }
 
 searchButton.addEventListener("click", () => {
