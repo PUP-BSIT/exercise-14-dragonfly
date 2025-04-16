@@ -1,6 +1,6 @@
 body {
     font-family: "Poppins", sans-serif;
-    background: url("image/img1.jpg") no-repeat center/cover fixed;
+    background: url("assets/image/img1.jpg") no-repeat center/cover fixed;
     color: #5a5a5a;
     text-align: center;
     margin: 0;
@@ -160,21 +160,7 @@ button:hover,
     background-color: #ccc;
     cursor: not-allowed;
 }
-
-.flag {
-    width: 150px;
-    margin-top: 10px;
-}
-
-.region-country {
-    display: inline-block;
-    margin: 5px;
-    padding: 5px 10px;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    font-size: 14px;
-}
-
+  
 @media (max-width: 320px) {
     .box,
     .container {
