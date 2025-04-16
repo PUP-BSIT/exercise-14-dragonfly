@@ -1,23 +1,23 @@
-let searchInput = document.getElementById("search-input");
-let searchButton = document.getElementById("search-button");
+let searchInput = document.getElementById("search_input");
+let searchButton = document.getElementById("search_button");
 let loadingElement = document.getElementById("loading");
 let errorElement = document.getElementById("error");
-let countryDetails = document.getElementById("country-details");
-let regionCountries = document.getElementById("region-countries");
-let initialMessage = document.getElementById("initial-message");
+let countryDetails = document.getElementById("country_details");
+let regionCountries = document.getElementById("region_countries");
+let initialMessage = document.getElementById("initial_message");
 
-let countryFlag = document.getElementById("country-flag");
-let countryCommonName = document.getElementById("country-common-name");
-let countryOfficialName = document.getElementById("country-official-name");
-let countryCapital = document.getElementById("country-capital");
-let countryRegion = document.getElementById("country-region");
-let countryPopulation = document.getElementById("country-population");
-let countryLanguages = document.getElementById("country-languages");
-let countryCurrencies = document.getElementById("country-currencies");
-let countryArea = document.getElementById("country-area");
+let countryFlag = document.getElementById("country_flag");
+let countryCommonName = document.getElementById("country_common_name");
+let countryOfficialName = document.getElementById("country_official_name");
+let countryCapital = document.getElementById("country_capital");
+let countryRegion = document.getElementById("country_region");
+let countryPopulation = document.getElementById("country_population");
+let countryLanguages = document.getElementById("country_languages");
+let countryCurrencies = document.getElementById("country_currencies");
+let countryArea = document.getElementById("country_area");
 
-let regionTitle = document.getElementById("region-title");
-let countriesGrid = document.getElementById("countries-grid");
+let regionTitle = document.getElementById("region_title");
+let countriesGrid = document.getElementById("countries_grid");
 
 function formatNumber(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
