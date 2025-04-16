@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     initializeCommentSection();
-    const searchBtn = document.getElementById("searchBtn");
+    const searchBtn = document.getElementById("search_Btn");
     if (searchBtn) {
         searchBtn.addEventListener("click", searchCountry);
     }
