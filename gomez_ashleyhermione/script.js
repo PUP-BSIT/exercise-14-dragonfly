@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
         let topPlaceHTML = "";
         if (name.toLowerCase() === "philippines") {
-            topPlaceHTML = `<p><strong>Top Place to Visit:</strong> Palawan</p>`;
+            topPlaceHTML = `<p><strong>Top Place:</strong> Palawan</p>`;
         }
   
         result.innerHTML = `
