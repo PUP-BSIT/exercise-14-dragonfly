@@ -118,15 +118,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const countryInput = document.getElementById("countryInput").value.trim();
     const result = document.getElementById("result");
     const regionBox = document.getElementById("region");
-  
+
     result.innerHTML = "";
     regionBox.innerHTML = "";
-  
+
     if (!countryInput) {
         alert("Please enter a country name.");
         return;
     }
-  
+
     try {
         const res = await fetch(
             `https://restcountries.com/v3.1/name/${encodeURIComponent(
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!res.ok) throw new Error("Country not found!");
         const data = await res.json();
         const country = data[0];
-  
+
         const name = country.name.common;
         const region = country.region;
         const capital = country.capital?.[0] || "N/A";
@@ -146,23 +146,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const currency = country.currencies
             ? Object.values(country.currencies)[0].name
             : "N/A";
+        const population = country.population?.toLocaleString() || "N/A";
         const flag = country.flags.svg;
-  
-        let topPlaceHTML = "";
-        if (name.toLowerCase() === "philippines") {
-            topPlaceHTML = `<p><strong>Top Place:</strong> Palawan</p>`;
-        }
-  
+
         result.innerHTML = `
             <h2>${name}</h2>
             <p><strong>Capital:</strong> ${capital}</p>
             <p><strong>Languages:</strong> ${languages}</p>
             <p><strong>Currency:</strong> ${currency}</p>
             <p><strong>Region:</strong> ${region}</p>
-            ${topPlaceHTML}
+            <p><strong>Population:</strong> ${population}</p>
             <img src="${flag}" class="flag" alt="Flag of ${name}" />
         `;
-  
+
         const regionRes = await fetch(
             `https://restcountries.com/v3.1/region/${encodeURIComponent(
                 region
@@ -170,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
         if (!regionRes.ok) throw new Error("Failed to fetch region data.");
         const regionCountries = await regionRes.json();
-  
+
         regionBox.innerHTML = `<h3>Other countries in ${region}:</h3>`;
         regionCountries.forEach((c) => {
             if (c.name.common.toLowerCase() !== name.toLowerCase()) {
@@ -183,4 +179,4 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (error) {
         result.innerHTML = `<p style="color:red;">${error.message}</p>`;
     }
-  }
+}
