@@ -201,7 +201,7 @@ body {
     font-weight: 500;
 }
 
-#initial-message {
+#initial_message {
     text-align: center;
     padding: 40px 0;
     color: var(--text-light);
@@ -211,7 +211,7 @@ body {
     box-shadow: 0 5px 15px var(--shadow);
 }
 
-#initial-message i {
+#initial_message i {
     font-size: 3rem;
     color: var(--primary);
     margin-bottom: 15px;
@@ -219,7 +219,7 @@ body {
 }
 
 /* Country details */
-#country-details {
+#country_details {
     display: none;
     background-color: white;
     border-radius: 12px;
@@ -343,7 +343,7 @@ body {
 }
 
 /* Region countries */
-#region-countries {
+#region_countries {
     display: none;
     background-color: white;
     border-radius: 12px;
@@ -352,7 +352,7 @@ body {
     margin-bottom: 40px;
 }
 
-#region-countries h2 {
+#region_countries h2 {
     font-size: 1.8rem;
     margin-bottom: 25px;
     color: var(--secondary);
@@ -420,4 +420,76 @@ body {
 
 .footer a:hover {
     text-decoration: underline;
+}
+
+/* Responsive styles */
+/* Mobile S */
+@media (max-width: 320px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .header p {
+        font-size: 1rem;
+    }
+
+    .nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .home-button a {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+    }
+
+    .search-form {
+        flex-direction: column;
+    }
+
+    .search-form input {
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .search-form button {
+        border-radius: 8px;
+        width: 100%;
+    }
+
+    .country-header {
+        padding: 20px 15px;
+    }
+
+    .flag-container {
+        flex: 0 0 150px;
+    }
+
+    .country-name h2 {
+        font-size: 1.8rem;
+    }
+
+    .country-info {
+        grid-template-columns: 1fr;
+    }
+
+    .info-item h3 {
+        font-size: 1rem;
+    }
+
+    .info-item p {
+        font-size: 0.9rem;
+    }
+
+    .countries-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .country-card h3 {
+        font-size: 0.9rem;
+    }
+
+    .footer p {
+        font-size: 0.9rem;
+    }
 }
