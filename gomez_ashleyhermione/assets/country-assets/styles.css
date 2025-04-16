@@ -1,6 +1,6 @@
 body {
     font-family: "Poppins", sans-serif;
-    background: url("assets/image/img1.jpg") no-repeat center/cover fixed;
+    background: url("../image/img1.jpg") no-repeat center/cover fixed;
     color: #5a5a5a;
     text-align: center;
     margin: 0;
@@ -10,10 +10,9 @@ body {
 .header h1 {
     background-color: #ffedf5;
     border: 3px solid plum;
-    border-radius: 15px;
+    border-radius: 20px;
     color: #ff6699;
     padding: 40px;
-    border-radius: 20px;
 }
 
 h1,
@@ -33,8 +32,7 @@ h6 {
 }
 
 .box,
-.container,
-.comment-box {
+.container {
     background-color: #ffedf5;
     border: 3px solid #ffccdd;
     border-radius: 15px;
@@ -49,8 +47,7 @@ h6 {
     max-width: 37.5rem;
 }
 
-.container,
-.comment-box {
+.container {
     max-width: 25rem;
 }
 
@@ -82,85 +79,44 @@ a {
     font-weight: bold;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-label {
-    margin-top: 10px;
-    font-weight: bold;
-    text-align: left;
-    display: block;
-}
-
-input,
-textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ffccdd;
-    border-radius: 8px;
-    box-sizing: border-box;
-}
-
-.name-group,
-.email-group {
-    display: flex;
-    gap: 10px;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-}
-
-.name-group label,
-.email-group label {
-    width: 100%;
-}
-
-.name-group input,
-.email-group input {
-    width: 100%;
-}
-
-.button-group {
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 15px;
-    width: 100%;
-}
-
-button,
-#submit_comment {
+button {
     background-color: #ff99cc;
     color: white;
     border: none;
     border-radius: 10px;
     padding: 10px 20px;
     cursor: pointer;
-    width: 45%; /* Adjusted width */
+    width: 45%;
 }
 
 button[type="reset"] {
     background-color: #ffb3d9;
 }
 
-button:hover,
-#submit_comment:hover {
+button:hover {
     background-color: #ff66a3;
 }
 
-#submit_comment {
-    width: 100px;
-    align-self: center;
+.flag {
+    width: 150px;
+    margin-top: 10px;
 }
 
-#submit_comment:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+.region-country {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    font-size: 14px;
 }
-  
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    padding: 0.5rem 0;
+}
+
 @media (max-width: 320px) {
     .box,
     .container {
